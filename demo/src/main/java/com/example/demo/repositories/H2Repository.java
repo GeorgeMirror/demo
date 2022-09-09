@@ -28,6 +28,7 @@ public class H2Repository implements Repository{
         }
         session.merge(task);
         transaction.commit();
+        session.close();
         return "ок";
     }
 
@@ -43,6 +44,7 @@ public class H2Repository implements Repository{
         task1.setDescription(task.getDescription());
         task1.setDate();
         tr.commit();
+        session.close();
         return "ок";
     }
 
@@ -59,6 +61,7 @@ public class H2Repository implements Repository{
             }
         }
         tr.commit();
+        session.close();
         return "Нет такого id в базе данных";
     }
 
@@ -68,6 +71,7 @@ public class H2Repository implements Repository{
         Transaction tr = session.beginTransaction();
         List<Task> list = session.createQuery("FROM Task", Task.class).list();
         tr.commit();
+        session.close();
         return list;
     }
 
@@ -77,6 +81,7 @@ public class H2Repository implements Repository{
         Transaction tr =session.beginTransaction();
         Task task = session.find(Task.class, id);
         tr.commit();
+        session.close();
         return task;
     }
 
