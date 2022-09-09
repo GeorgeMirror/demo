@@ -13,7 +13,7 @@ class H2TaskServiceTest {
     @Test
     void create_success() {
         taskService.modeH2();
-        Task requestTask = new Task("name","description",1);
+        Task requestTask = new Task("name","description",1000);
         String res = taskService.create(requestTask);
         assertThat(res).isEqualTo("ок");
     }
