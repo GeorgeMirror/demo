@@ -1,19 +1,21 @@
 package com.example.demo.services;
 
 import com.example.demo.db.Task;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class ListTaskServiceTest {
     TaskService taskService = new TaskService();
     @Test
     void create_success() {
         taskService.modeList();
-        Task requestTask = new Task("name","description",1000);
-        String res = taskService.create(requestTask);
+        String res = taskService.create(new Task("name","description",1550));
         assertThat(res).isEqualTo("ок");
     }
 
@@ -77,7 +79,7 @@ public class ListTaskServiceTest {
         List<Task> list = taskService.show();
         assertThat(list.get(0).getId()).isEqualTo(requestTask.getId());
     }
-
+    @Order(1)
     @Test
     void show_error() {
         taskService.modeList();
