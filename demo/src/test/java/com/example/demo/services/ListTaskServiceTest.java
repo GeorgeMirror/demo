@@ -12,7 +12,7 @@ public class ListTaskServiceTest {
     @Test
     void create_success() {
         taskService.modeList();
-        Task requestTask = new Task("name","description",1);
+        Task requestTask = new Task("name","description",1000);
         String res = taskService.create(requestTask);
         assertThat(res).isEqualTo("ок");
     }
