@@ -7,18 +7,20 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 
 public class Config {
-    private static Session session;
+    private static SessionFactory sessionFactory;
     private Config(){}
+    public static void getSessionFactory(){
+        Configuration con = new Configuration().configure();
+        con.addAnnotatedClass(Task.class);
+        StandardServiceRegistryBuilder sBuilder;
+        sBuilder = new StandardServiceRegistryBuilder().applySettings(con.getProperties());
+        sessionFactory = con.buildSessionFactory(sBuilder.build());
+    }
     public static Session getSession(){
-        if (session==null){
-            Configuration con = new Configuration().configure();
-            con.addAnnotatedClass(Task.class);
-            StandardServiceRegistryBuilder sBuilder;
-            sBuilder = new StandardServiceRegistryBuilder()
-                    .applySettings(con.getProperties());
-            SessionFactory sf = con.buildSessionFactory(sBuilder.build());
-            session = sf.openSession();
+        if (sessionFactory==null) {
+            getSessionFactory();
         }
-        return session;
+        return sessionFactory.openSession();
     }
 }
+
