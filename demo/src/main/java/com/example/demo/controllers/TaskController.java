@@ -21,7 +21,7 @@ public class TaskController {
     }
 
     @PostMapping
-    public Object createTask(@ModelAttribute("Task") final Task task){
+    public Object createTask(@ModelAttribute("Task") Task task){
         while (!f){
             try {
                 Thread.sleep(500);
@@ -75,9 +75,10 @@ public class TaskController {
         f = false;
         Object res = taskService.delete(id);
         f = true;
+        System.out.println(res);
         return res;
     }
-    @PatchMapping("/{id}")
+    @PatchMapping
     public Object update(@ModelAttribute("Task") Task task){
         while (!f){
             try {
