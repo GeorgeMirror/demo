@@ -26,6 +26,7 @@ public class H2Repository implements Repository{
             transaction.commit();
             return "Такой id уже есть в базе. Воспользуйтесь изменением.";
         }
+        task.setDate();
         session.merge(task);
         transaction.commit();
         session.close();
@@ -38,6 +39,7 @@ public class H2Repository implements Repository{
         Transaction tr = session.beginTransaction();
         Task task1 = session.find(Task.class, task.getId());
         if (task1==null){
+            System.out.println("НЕТ ТАКОГО id");
             return "Нет такого id в базе данных. Воспользуйтесь созданием.";
         }
         task1.setName(task.getName());
@@ -55,7 +57,7 @@ public class H2Repository implements Repository{
         List<Task> list = session.createQuery("FROM Task", Task.class).list();
         for(Task x : list){
             if (x.getId()==id){
-                session.delete(x);
+                session.remove(x);
                 tr.commit();
                 return "ок";
             }
